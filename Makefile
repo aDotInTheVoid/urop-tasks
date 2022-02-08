@@ -8,12 +8,10 @@ obj/%: examples/%.c
 	gcc $< -o $@
 
 mt_seq: malloc.so
-	LD_PRELOAD=./malloc.so seq 1 10
+	LD_PRELOAD=./malloc.so seq 1 5
 
 mt/%: obj/% malloc.so
 	LD_PRELOAD=./malloc.so $<
-
-
 
 .PHONY: clean
 clean:

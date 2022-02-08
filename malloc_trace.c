@@ -10,7 +10,10 @@ malloc_ptr libc_malloc = NULL;
 
 void *malloc(size_t size)
 {
-  fprintf(stderr, "malloc(%zu)\n", size);
+  static size_t count = 0;
+  count += size;
+
+  fprintf(stderr, "Allocation of %zu, total = %zu\n", size, count);
 
   if (libc_malloc == NULL)
   {
