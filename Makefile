@@ -2,7 +2,7 @@
 all: malloc.so
 
 malloc.so: malloc_trace.c
-	gcc $< -o $@ -shared -fPIC
+	gcc $< -o $@ -shared -ldl -fPIC
 
 obj/%: examples/%.c
 	gcc $< -o $@
