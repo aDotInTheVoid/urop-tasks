@@ -30,9 +30,7 @@ void *malloc(size_t size)
     fprintf(stderr, "%d: Got %p with libc\n", mid, ptr);
     return ptr;
   }
-
-  // Ensure we only call dlsym once to avoid recursion
-  if (!started)
+  else
   {
     started = true;
     fprintf(stderr, "%d: Initint libc\n", mid);
@@ -42,18 +40,6 @@ void *malloc(size_t size)
     fprintf(stderr, "%d: got %p (via libc init)\n", mid, ptr);
     return ptr;
   }
-
-  // Buffer allocation path
-  void *ptr = &buffer;
-  size = adjust_size(size);
-  ptr += buffer_offset;
-  buffer_offset += size;
-
-  fprintf(stderr, "%d: got %p (buffer)\n", mid, ptr);
-
-  return ptr;
-  //      malloc_ptr libc_ptr = (malloc_ptr)dlsym(RTLD_NEXT, "malloc");
-  //     return (*libc_ptr)(size);
 }
 
 void free(void *ptr)
