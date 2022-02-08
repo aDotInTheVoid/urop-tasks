@@ -1,6 +1,3 @@
-#include <algorithm>
-#include <map>
-
 #include "llvm/IR/Function.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Pass.h"
@@ -25,11 +22,11 @@ struct Counter : public llvm::FunctionPass {
     llvm::errs() << "The program has a total of " << nFunc << " functions and "
                  << nBasicBlock << " basic blocks.\n";
   }
-};  // end of struct Counter
-}  // end of anonymous namespace
+};
+}  // namespace
 
 char Counter::ID = 0;
-static llvm::RegisterPass<Counter> X("bb_count", "Instruction Counter Pass");
+static llvm::RegisterPass<Counter> X("bb_count", "Basic Block Counter Pass");
 
 static llvm::RegisterStandardPasses Y(
     llvm::PassManagerBuilder::EP_EarlyAsPossible,

@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <map>
 
 #include "llvm/IR/Function.h"
@@ -10,7 +9,7 @@
 namespace {
 struct Counter : public llvm::FunctionPass {
   static char ID;
-  //        nInstr freq
+  // bbInstrFreq[nInstr] = freq
   std::map<size_t, size_t> bbInstrFreq = {};
 
   Counter() : FunctionPass(ID) {}
@@ -23,17 +22,13 @@ struct Counter : public llvm::FunctionPass {
   }
 
   ~Counter() {
-    // int i = 0;
     auto end = bbInstrFreq.rbegin()->first;
     for (int i = 0; i <= end; i++) {
       llvm::errs() << i << " " << bbInstrFreq[i] << "\n";
     }
-    // for (auto [nInstr, freq] : bbInstrFreq) {
-    //   llvm::errs() << i++ << " " << nInstr << " " << freq << "\n";
-    // }
   }
-};  // end of struct Counter
-}  // end of anonymous namespace
+};
+}  // namespace
 
 char Counter::ID = 0;
 static llvm::RegisterPass<Counter> X("i_count", "Instruction Counter Pass");
