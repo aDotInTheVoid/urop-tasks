@@ -7,56 +7,29 @@
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
 
-// RIP https://reviews.llvm.org/D69121
-
-static bool pair_compare(std::pair<size_t, size_t> l,
-                         std::pair<size_t, size_t> r) {
-  return l.second < r.second;
-}
-
 namespace {
 struct Counter : public llvm::FunctionPass {
   static char ID;
-  int bbCount = 0;
-  int funcCount = 0;
-  // nBB, freq
-  std::map<size_t, size_t> bbInstrFreq = {};
+  size_t nFunc;
+  size_t nBasicBlock;
 
   Counter() : FunctionPass(ID) {}
 
   bool runOnFunction(llvm::Function &F) override {
-    funcCount++;
-    bbCount += F.size();
-
-    llvm::errs() << "Function " << F.getName() << "\n";
-
-    for (auto &bb : F) {
-      llvm::errs() << " BasicBlock\n";
-      bbInstrFreq[bb.size()]++;
-      for (auto &i : bb) {
-        llvm::errs() << "  " << i << "\n";
-      }
-    }
-
-    llvm::errs() << "function " << F.getName() << " has " << F.size()
-                 << " bbs\n";
-
+    nFunc++;
+    nBasicBlock += F.size();
     return false;
   }
 
   ~Counter() {
-    llvm::errs() << "The program has a total of " << funcCount
-                 << " functions and " << bbCount << " basic blocks.\n";
-
-    for (auto [size, freq] : bbInstrFreq) {
-      llvm::errs() << size << " " << freq << "\n";
-    }
+    llvm::errs() << "The program has a total of " << nFunc << " functions and "
+                 << nBasicBlock << " basic blocks.\n";
   }
 };  // end of struct Counter
 }  // end of anonymous namespace
 
 char Counter::ID = 0;
-static llvm::RegisterPass<Counter> X("count", "Counter World Pass");
+static llvm::RegisterPass<Counter> X("bb_count", "Instruction Counter Pass");
 
 static llvm::RegisterStandardPasses Y(
     llvm::PassManagerBuilder::EP_EarlyAsPossible,
