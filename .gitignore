@@ -4,3 +4,4 @@ a.out
 *.o
 bb_count
 *.bc
+*.dat

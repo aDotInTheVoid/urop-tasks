@@ -20,11 +20,22 @@ bb_count.so: bb_count.cpp
 	g++ $(shell llvm-config-11 --cxxflags) -std=c++17 bb_count.cpp -c -fPIC -o  bb_count.o 
 	g++ bb_count.o $(shell llvm-config-11 --ldflags --libs) -std=c++17 -shared -fPIC -o bb_count.so 
 
+i_count.so: i_count.cpp
+	g++ $(shell llvm-config-11 --cxxflags) -std=c++17 i_count.cpp -c -fPIC -o  i_count.o 
+	g++ i_count.o $(shell llvm-config-11 --ldflags --libs) -std=c++17 -shared -fPIC -o i_count.so 
+
+
 %.bc: examples/%.c
 	clang-11 -c -emit-llvm $< -o $@
+
+%.pdf: %.bc i_count.so
+	opt-11 -load ./i_count.so --i_count < $< > /dev/null 2> hist.dat
+	gnuplot graph.plot
+	mv __tmp.pdf $@
+	rm hist.dat
 
 
 
 .PHONY: clean
 clean:
-	rm -f *.so *.bc obj/* a.out
+	rm -f *.so *.bc obj/* a.out *.pdf *.dat
