@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define N_ALLOCS 1000
+#define N_ALLOCS 20
 #define ALLOC_SIZE 1000000000
 
 int main()
