@@ -5,7 +5,7 @@ malloc.so: malloc_trace.c
 	gcc $< -o $@ -shared -ldl -fPIC
 
 obj/%: examples/%.c
-	gcc $< -o $@ -lpthread
+	gcc $< -o $@ -lpthread -g
 
 mt_seq: malloc.so
 	LD_PRELOAD=./malloc.so seq 1 5
