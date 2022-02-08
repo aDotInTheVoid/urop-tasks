@@ -23,10 +23,14 @@ struct Counter : public llvm::FunctionPass {
   }
 
   ~Counter() {
-    int i = 0;
-    for (auto [nInstr, freq] : bbInstrFreq) {
-      llvm::errs() << i++ << " " << nInstr << " " << freq << "\n";
+    // int i = 0;
+    auto end = bbInstrFreq.rbegin()->first;
+    for (int i = 0; i <= end; i++) {
+      llvm::errs() << i << " " << bbInstrFreq[i] << "\n";
     }
+    // for (auto [nInstr, freq] : bbInstrFreq) {
+    //   llvm::errs() << i++ << " " << nInstr << " " << freq << "\n";
+    // }
   }
 };  // end of struct Counter
 }  // end of anonymous namespace

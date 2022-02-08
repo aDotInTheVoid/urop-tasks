@@ -28,11 +28,10 @@ i_count.so: i_count.cpp
 %.bc: examples/%.c
 	clang-11 -c -emit-llvm $< -o $@
 
-%.pdf: %.bc i_count.so
+%.pdf: %.bc i_count.so graph.plot
 	opt-11 -load ./i_count.so --i_count < $< > /dev/null 2> hist.dat
 	gnuplot graph.plot
 	mv __tmp.pdf $@
-	rm hist.dat
 
 
 
