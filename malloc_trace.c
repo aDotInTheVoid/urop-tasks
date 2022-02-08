@@ -10,12 +10,13 @@ typedef void (*free_ptr)(size_t *);
 malloc_ptr libc_malloc = NULL;
 
 void log_malloc(size_t size) {
-  static int count = 0;
-  count += size;
-  fprintf(stderr, "Allocation of %zu, total = %zu\n", size, count);
+  static atomic_size_t count = 0;
+  size_t old_count = atomic_fetch_add(&count, size);
+  fprintf(stderr, "Allocation of %zu, total = %zu\n", size, old_count + size);
 }
 
 void *malloc(size_t size) {
+  log_malloc(size);
   if (libc_malloc == NULL) {
     libc_malloc = dlsym(RTLD_NEXT, "malloc");
   }
