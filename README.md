@@ -2,14 +2,18 @@
 
 <https://www.doc.ic.ac.uk/~cristic/misc/urop-tasks.txt>
 
+Requirements
+
 - gcc/g++
 - Gnu make
 - LLVM-11 (including headers)
 - gnuplot
 
+In theory everything should be scripted through the Makefile
+
 ## [1: `malloc` Tracing](malloc_trace.c)
 
-Building: `make malloc.so` or `gcc malloc_trace.c -o malloc.so -shared -ldl -fPIC`
+Building: `make malloc.so`
 
 Running: `LD_PRELOAD=./malloc.so seq 1 10`
 
