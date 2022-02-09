@@ -8,10 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void *(*libc_malloc)(size_t size);
-void *(*libc_calloc)(size_t nmemb, size_t size);
-void *(*libc_realloc)(void *ptr, size_t size);
-void *(*libc_reallocarray)(void *ptr, size_t nmemb, size_t size);
+void *(*libc_malloc)(size_t size) = NULL;
 
 void log_malloc(size_t size) {
   static atomic_size_t count = 0;

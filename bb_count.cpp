@@ -7,8 +7,8 @@
 namespace {
 struct Counter : public llvm::FunctionPass {
   static char ID;
-  size_t nFunc;
-  size_t nBasicBlock;
+  size_t nFunc = 0;
+  size_t nBasicBlock = 0;
 
   Counter() : FunctionPass(ID) {}
 
