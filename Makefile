@@ -24,7 +24,7 @@ bb/%: %.bc bb_count.so
 
 %.so: %.cpp
 	$(CXX) $(shell $(LLVMCONFIG) --cxxflags) -std=c++17 $< -fPIC -c -o mod.o
-	$(CXX) mod.o $(shell $(LLVMCONFIG) --ldflags --libs) -std=c++17 -shared -fPIC -o $@
+	$(CXX) mod.o $(shell $(LLVMCONFIG) --ldflags) -std=c++17 -shared -fPIC -o $@
 
 %.bc: examples/%.c
 	$(CLANG) -c -emit-llvm $< -o $@
