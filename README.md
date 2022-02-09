@@ -48,10 +48,14 @@ LLVM should be installed and pointed to as above. This also requires gnuplot.
 
 If you run `make program.pdf`, it should produce an histogram in `program.pdf`
 
+![image](https://user-images.githubusercontent.com/28781354/153306103-f3ba51e7-1112-4fec-8a6c-623d6c686629.png)
+
+
 We can use [godbolt](https://godbolt.org/z/16doa1eKc) to confirm that this is correct.
 
 For a more representive sample, here is the output on the sqlite amalgamation (3.37.2)
 
+![image](https://user-images.githubusercontent.com/28781354/153306134-64099b8c-5391-4168-bdf0-b315203ddbe2.png)
 
 
 If any of this doesnt work, please email me, because it was quite brittle to build.
