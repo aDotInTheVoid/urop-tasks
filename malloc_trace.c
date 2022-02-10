@@ -17,7 +17,6 @@ void log_malloc(size_t size) {
 }
 
 void *malloc(size_t size) {
-  log_malloc(size);
   if (libc_malloc == NULL) libc_malloc = dlsym(RTLD_NEXT, "malloc");
   void *ptr = (*libc_malloc)(size);
   if (ptr != NULL)
